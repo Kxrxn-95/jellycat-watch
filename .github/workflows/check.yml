@@ -1,0 +1,46 @@
+name: Jellycat stock check
+
+on:
+  schedule:
+    # Runs roughly every 15 minutes. GitHub may delay scheduled runs at busy
+    # times, so treat this as "about every 15-20 min".
+    - cron: "*/15 * * * *"
+  workflow_dispatch:        # lets you run it manually from the Actions tab
+
+# Allow the workflow to commit the updated state.json back to the repo.
+permissions:
+  contents: write
+
+# Don't let two runs overlap.
+concurrency:
+  group: jellycat-stock-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run stock checker
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python check_stock.py
+
+      - name: Save state
+        run: |
+          if [[ -n "$(git status --porcelain state.json)" ]]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add state.json
+            git commit -m "Update stock state [skip ci]"
+            git push
+          else
+            echo "No state change to commit."
+          fi
