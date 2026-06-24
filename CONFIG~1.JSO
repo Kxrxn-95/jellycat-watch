@@ -1,0 +1,21 @@
+{
+  "ntfy_topic": "CHANGE_ME-jellycat-a8f3kd92",
+
+  "auto_discover": {
+    "enabled": true,
+    "category_url": "https://jellycat.com/animals/dragons-dinosaurs",
+    "slug_pattern": "^[a-z0-9]+-dragon$",
+    "max_pages": 8
+  },
+
+  "products": [
+    { "name": "Persimmon Dragon", "url": "https://jellycat.com/persimmon-dragon/" },
+    { "name": "Heart Dragon",     "url": "https://jellycat.com/heart-dragon/" },
+    { "name": "Dexter Dragon",    "url": "https://jellycat.com/dexter-dragon/" },
+    { "name": "Snow Dragon",      "url": "https://jellycat.com/snow-dragon/" },
+    { "name": "Sky Dragon",       "url": "https://jellycat.com/sky-dragon/" },
+    { "name": "Lazulia Dragon",   "url": "https://jellycat.com/lazulia-dragon/" },
+    { "name": "Malachy Dragon",   "url": "https://jellycat.com/malachy-dragon/" },
+    { "name": "Lavender Dragon",  "url": "https://jellycat.com/lavender-dragon/" }
+  ]
+}
