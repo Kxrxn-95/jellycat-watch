@@ -19,10 +19,10 @@ You don't need to know any code. Setup is about 15 minutes, mostly copying and p
 2. Open it, tap **+** to subscribe to a topic, and enter a **topic name**. A topic is just a secret word — anyone who knows it can send you alerts, so make it long and random. Use this one (or invent your own):
 
    ```
-   jellycat-kieran-7Qx2m9
+   jellycat-dragon-alerts-7Qx2m9
    ```
 
-3. To make it feel like an app: in Safari you can also open `https://ntfy.sh/jellycat-kieran-7Qx2m9`, tap the **Share** button, then **Add to Home Screen**. (The app itself already lives on your home screen, so this step is optional.)
+3. To make it feel like an app: in Safari you can also open `https://ntfy.sh/jellycat-dragon-alerts-7Qx2m9`, tap the **Share** button, then **Add to Home Screen**. (The app itself already lives on your home screen, so this step is optional.)
 
 Keep that topic name handy — you'll paste it into GitHub in Part 3.
 
@@ -48,7 +48,7 @@ Keep that topic name handy — you'll paste it into GitHub in Part 3.
 
 1. In your repo go to **Settings → Secrets and variables → Actions → New repository secret**.
 2. Name: `NTFY_TOPIC`
-3. Value: your topic from Part 1 (e.g. `jellycat-kieran-7Qx2m9`)
+3. Value: your topic from Part 1 (e.g. `jellycat-dragon-alerts-7Qx2m9`)
 4. Click **Add secret**.
 
 Using a secret keeps your topic out of the public code.
