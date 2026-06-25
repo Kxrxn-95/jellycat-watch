@@ -168,7 +168,7 @@ def notify(topic: str, title: str, message: str, url: str) -> None:
         headers={
             "Title": title,
             "Tags": "tada,shopping_bags",
-            "Priority": "high",
+            "Priority": "max",
             "Click": url,            # tapping the notification opens the product
             "Actions": f"view, Open product, {url}",
         },
