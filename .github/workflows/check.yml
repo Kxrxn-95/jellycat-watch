@@ -2,7 +2,7 @@ name: Jellycat stock check
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/3 * * * *"
   workflow_dispatch:
 
 permissions:
