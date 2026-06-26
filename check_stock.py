@@ -38,15 +38,18 @@ OUT_OF_STOCK_MARKERS = [
     "sold out",
     "notify me when",
     "email me when",
-    "back in stock",        # the "notify me when back in stock" form
     "coming soon",
     "currently unavailable",
+    "no longer available",
 ]
 
-# Phrases that mean "you can buy this".
+# Phrases that indicate a live, purchasable product (an active buy control).
+# "adding to bag" is the add-to-cart confirmation text, present on a real
+# product form; it does NOT appear on retired pages that have no buy button.
 IN_STOCK_MARKERS = [
     "add to bag",
     "add to cart",
+    "adding to bag",
 ]
 
 
@@ -60,45 +63,49 @@ def fetch(url: str) -> str:
 
 def detect_in_stock(html: str):
     """
-    Decide whether a product page shows the item as in stock.
+    Decide whether a product page shows the item as buyable right now.
 
-    Returns True (in stock), False (out of stock), or None (couldn't tell).
-    Strategy, most reliable first:
-      1. schema.org availability in the page's structured data.
-      2. Open Graph product:availability meta tag.
-      3. Text markers ("Add to Bag" vs "Out of Stock").
+    Returns (in_stock: bool, info: str) where info is a short diagnostic of
+    the signals found, printed to the run log.
+
+    Logic, fail-safe to "out of stock":
+      * Explicit out-of-stock wording (or structured-data OutOfStock) -> OUT.
+      * Otherwise, a real buy control ("Add to Bag" / add-to-cart) -> IN.
+      * Otherwise -> OUT. Retired products land here: they have no buy button,
+        even though their structured-data tag is often a stale "InStock", which
+        is exactly the false positive we're avoiding. Structured-data "InStock"
+        on its own is NOT treated as proof of stock.
     """
     lower = html.lower()
 
-    # 1. Structured data: "availability": "https://schema.org/InStock"
+    # Read structured / Open Graph availability (used only as a negative signal).
+    schema = None
     m = re.search(r'availability"\s*:\s*"[^"]*?(instock|outofstock|soldout)', lower)
     if m:
-        return m.group(1) == "instock"
+        schema = m.group(1)
+    else:
+        m = re.search(r'product:availability["\'][^>]*content=["\']([^"\']+)', lower)
+        if m:
+            val = m.group(1).strip()
+            if "outofstock" in val or "out of stock" in val:
+                schema = "outofstock"
+            elif "instock" in val or val in ("in stock", "available"):
+                schema = "instock"
 
-    # 2. Open Graph: <meta property="product:availability" content="instock">
-    m = re.search(
-        r'property=["\']product:availability["\']\s+content=["\']([^"\']+)',
-        lower,
-    )
-    if m:
-        val = m.group(1).strip()
-        return "instock" in val or val in ("in stock", "available")
-
-    # 3. Fall back to visible text. Out-of-stock wording wins if present,
-    #    because a sold-out page usually still has a disabled "Add to Bag".
-    has_oos = any(marker in lower for marker in OUT_OF_STOCK_MARKERS)
+    has_oos = any(marker in lower for marker in OUT_OF_STOCK_MARKERS) or \
+        schema in ("outofstock", "soldout")
     has_buy = any(marker in lower for marker in IN_STOCK_MARKERS)
+    is_retired = "retired" in lower
 
-    if has_oos and not has_buy:
-        return False
-    if has_buy and not has_oos:
-        return True
-    if has_buy and has_oos:
-        # Ambiguous (e.g. a "notify me" upsell on an in-stock page). Lean
-        # in-stock, since a true sold-out page rarely keeps a live buy button.
-        return True
+    if has_oos:
+        in_stock = False
+    elif has_buy:
+        in_stock = True
+    else:
+        in_stock = False  # no buy control -> treat as not purchasable
 
-    return None  # genuinely couldn't determine
+    info = f"schema={schema} buy={has_buy} oos={has_oos} retired={is_retired}"
+    return in_stock, info
 
 
 def discover_products(disc: dict) -> list:
@@ -230,14 +237,11 @@ def main() -> int:
             print(f"[skip] {name}: fetch failed ({exc})")
             continue
 
-        in_stock = detect_in_stock(html)
+        in_stock, info = detect_in_stock(html)
         prev = state.get(url, {}).get("in_stock")
 
-        status = {True: "IN STOCK", False: "out of stock", None: "unknown"}[in_stock]
-        print(f"[check] {name}: {status} (was: {prev})")
-
-        if debug and in_stock is None:
-            print(f"  (debug) could not detect stock for {url}")
+        status = "IN STOCK" if in_stock else "out of stock"
+        print(f"[check] {name}: {status} (was: {prev})  [{info}]")
 
         # Notify only on the transition out-of-stock -> in-stock.
         if in_stock is True and prev is not True:
@@ -252,9 +256,8 @@ def main() -> int:
             except (HTTPError, URLError, TimeoutError) as exc:
                 print(f"  !! notification failed: {exc}")
 
-        if in_stock is not None:
-            state[url] = {"in_stock": in_stock, "name": name, "checked": int(time.time())}
-            changed = True
+        state[url] = {"in_stock": in_stock, "name": name, "checked": int(time.time())}
+        changed = True
 
         time.sleep(2)  # be polite to the site
 
