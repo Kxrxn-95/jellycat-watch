@@ -82,6 +82,8 @@ The app subscription and this secret must be **character-for-character identical
 1. **`products`** — the explicit list. Each is always checked, even if delisted or sold out for ages. `name` is just the label shown in the notification; `url` is the real product page address.
 2. **`auto_discover`** — reads Jellycat's *Dragons & Dinosaurs* category every run and automatically adds any product whose address looks like `something-dragon` (e.g. a new `ember-dragon`). New dragons get picked up on the next check with no edits from you. The `slug_pattern` keeps it sensible: it matches a single name + `-dragon`, so it **includes** real dragon plushes (`sage-dragon`, `onyx-dragon`) and **excludes** bag charms, soothers, books and "Personalised … Huge" versions.
 
+**Retired dragons** (e.g. Sage, Golden, Onyx, Rose) are included on purpose. They correctly read as *out of stock* — and if Jellycat ever brings one back, the buy button reappears and you'll be alerted. (See "How stock is detected" below for why a retired page no longer false-reports as in stock.)
+
 Leave `ntfy_topic` as-is in this file; the GitHub secret from Part 3 overrides it. Commit any changes.
 
 > **Note on the URL convention:** auto-discovery assumes a single-word name like `name-dragon`. A two-word name (e.g. `blue-moon-dragon`) wouldn't be caught automatically — just add it to `products` by hand.
@@ -159,13 +161,23 @@ To prove GitHub → script → ntfy → your phone all work:
 
 ---
 
+## How stock is detected
+
+For each product the checker decides like this (erring on the side of "out of stock", so you never get false alarms):
+
+1. If the page shows out-of-stock wording (or structured-data marked `OutOfStock`) → **out of stock**.
+2. Otherwise, if there's an active buy control ("Add to Bag") → **in stock**.
+3. Otherwise → **out of stock**.
+
+Step 3 is what fixes retired products: a retired page has no buy button, yet its hidden structured-data tag often still says "InStock". The checker therefore does **not** treat that tag on its own as proof of stock — it needs a real buy button. Every run logs a diagnostic per item (`[schema=… buy=… oos=… retired=…]`) so you can see exactly which signals were found.
+
 ## Troubleshooting
 
 - **Alerts show inside the ntfy app but no iOS banner.** iOS didn't register the app for push (usually because the first-launch "Allow" prompt was missed). **Delete and reinstall the ntfy app, tap "Allow" on the prompt, then re-subscribe to your topic.** This is the reliable fix. Also check **Settings → Notifications → ntfy** has Allow Notifications + Banners + Sounds on, and that the topic isn't muted in the app.
 - **No alerts at all (not even in-app).** The app's topic and the `NTFY_TOPIC` secret don't match. Set both to the same exact value.
 - **Notifications respect silent/Do-Not-Disturb.** Max priority gives a prominent banner + sound, but iOS won't override silent mode or a Focus unless you allow ntfy under **Settings → Focus**. (True override needs a "Critical Alerts" entitlement ntfy doesn't have.)
 - **Runs stopped appearing.** Check cron-job.org's execution history — anything other than HTTP 204 usually means the **GitHub token has expired** (regenerate it and paste the new one into the cron-job.org header). Also note GitHub auto-disables a repo's *built-in* schedule after 60 days of no commits — but since cron-job.org drives this, that doesn't affect you.
-- **An item shows `unknown` in the log.** Jellycat may have changed its page wording for that product — the detection rule needs a tweak.
+- **A real in-stock item is reported out of stock.** Each log line ends with a diagnostic like `[schema=instock buy=True oos=False retired=False]`. If a genuinely in-stock item shows `buy=False`, Jellycat may have changed its buy-button wording — the `IN_STOCK_MARKERS` list in `check_stock.py` needs a tweak.
 
 ---
 
