@@ -16,6 +16,10 @@
     { "name": "Sky Dragon",       "url": "https://jellycat.com/sky-dragon/" },
     { "name": "Lazulia Dragon",   "url": "https://jellycat.com/lazulia-dragon/" },
     { "name": "Malachy Dragon",   "url": "https://jellycat.com/malachy-dragon/" },
-    { "name": "Lavender Dragon",  "url": "https://jellycat.com/lavender-dragon/" }
+    { "name": "Lavender Dragon",  "url": "https://jellycat.com/lavender-dragon/" },
+    { "name": "Sage Dragon (retired)",   "url": "https://jellycat.com/sage-dragon/" },
+    { "name": "Golden Dragon (retired)", "url": "https://jellycat.com/golden-dragon/" },
+    { "name": "Onyx Dragon (retired)",   "url": "https://jellycat.com/onyx-dragon/" },
+    { "name": "Rose Dragon (retired)",   "url": "https://jellycat.com/rose-dragon/" }
   ]
 }
