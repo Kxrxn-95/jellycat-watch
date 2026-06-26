@@ -1,63 +1,63 @@
-# 🐰 Jellycat Watch
+# 🐉 Jellycat Watch
 
-Get a push notification on your iPhone the moment a specific Jellycat item comes back in stock.
+Get a push notification on your iPhone the moment a tracked Jellycat dragon comes back in stock — including any brand-new dragon Jellycat releases.
 
-## How it works (the short version)
+## How it works
 
-There are two pieces:
+Three pieces work together:
 
-1. **A checker** — a tiny script that visits the Jellycat product pages you care about every ~15 minutes and works out whether they're in stock. It runs for free in the cloud on **GitHub Actions**, so it keeps checking even when your phone and computer are off.
-2. **The notifications** — when something restocks, the checker sends an alert to **ntfy**, a free app you install on your iPhone and add to your home screen. That app is what buzzes you.
+1. **A checker** — a small Python script (`check_stock.py`) that visits the Jellycat product pages you care about, plus the Dragons & Dinosaurs category, and works out what's in stock. It runs in the cloud on **GitHub Actions**, so it keeps going even when your phone and computer are off.
+2. **A scheduler** — a free service (**cron-job.org**) that reliably triggers the checker every few minutes. (GitHub's own built-in timer is unreliable for frequent runs, so we drive it externally instead.)
+3. **The notifications** — when something restocks, the checker sends a high-priority alert to **ntfy**, a free app on your iPhone that buzzes you.
 
-You don't need to know any code. Setup is about 15 minutes, mostly copying and pasting.
+No coding needed — it's all copying and pasting.
 
 ---
 
-## Part 1 — Get the notification app on your iPhone
+## Part 1 — The notification app (iPhone)
 
-1. On your iPhone, install **ntfy** from the App Store (it's free, the icon is a green bell).
-2. Open it, tap **+** to subscribe to a topic, and enter a **topic name**. A topic is just a secret word — anyone who knows it can send you alerts, so make it long and random. Use this one (or invent your own):
-
+1. Install **ntfy** from the App Store — the official one is by **Philipp Heckel** (green bell icon).
+2. **When it first asks to send you notifications, tap "Allow."** This step matters: if you skip the prompt and switch notifications on later in Settings, push delivery often won't register properly (see Troubleshooting).
+3. Tap **+** to subscribe to a **topic**. A topic is a secret word — anyone who knows it can send you alerts, so keep it long and private. Yours is:
    ```
    jellycat-dragon-alerts-7Qx2m9
    ```
+4. Optional: to add it as a home-screen icon, open `https://ntfy.sh/your-topic` in Safari → **Share → Add to Home Screen**.
 
-3. To make it feel like an app: in Safari you can also open `https://ntfy.sh/jellycat-dragon-alerts-7Qx2m9`, tap the **Share** button, then **Add to Home Screen**. (The app itself already lives on your home screen, so this step is optional.)
-
-Keep that topic name handy — you'll paste it into GitHub in Part 3.
+Keep the topic name handy — it must match the GitHub secret in Part 3 exactly.
 
 ---
 
 ## Part 2 — Put the checker on GitHub
 
-1. Create a free account at [github.com](https://github.com) if you don't have one.
-2. Create a **new repository** — name it anything (e.g. `jellycat-watch`). It can be private.
-3. Upload the files from this folder into the repo. The easiest way: on the new repo page click **uploading an existing file**, then drag in everything from the `jellycat-watch` folder. Make sure the folder structure is kept, especially `.github/workflows/check.yml`.
-
-   Your repo should contain:
+1. Create a free account at [github.com](https://github.com).
+2. Create a **new repository** named `jellycat-watch`. **Make it Public** — public repos get unlimited free Actions minutes, and there are no secrets in the code (your topic lives in a separate GitHub secret, not the files).
+3. Add these files to the repo:
    ```
    check_stock.py
    config.json
    .github/workflows/check.yml
-   docs/            (optional dashboard — see Part 5)
+   docs/            (optional dashboard — see Part 6)
    ```
+
+   **Tip on uploading:** GitHub's web drag-and-drop can't create folders and Windows sometimes mangles filenames during a drag (e.g. `CHECK_~1.PY`). The reliable way is **Add file → Create new file**: type the full path in the name box — typing `.github/workflows/check.yml` auto-creates the folders — then paste the contents. Do the same for `check_stock.py` and `config.json`. If a filename ever comes out wrong, open it → pencil ✏️ → fix the name → commit.
 
 ---
 
 ## Part 3 — Tell it your ntfy topic (kept secret)
 
-1. In your repo go to **Settings → Secrets and variables → Actions → New repository secret**.
+1. In the repo: **Settings → Secrets and variables → Actions → New repository secret**.
 2. Name: `NTFY_TOPIC`
-3. Value: your topic from Part 1 (e.g. `jellycat-dragon-alerts-7Qx2m9`)
-4. Click **Add secret**.
+3. Value: your exact topic from Part 1 — `jellycat-dragon-alerts-7Qx2m9`
+4. **Add secret**.
 
-Using a secret keeps your topic out of the public code.
+The app subscription and this secret must be **character-for-character identical**, or no alerts arrive. (GitHub hides secret values once saved — you can overwrite but not read them back, so if in doubt, set both sides fresh to the same value.)
 
 ---
 
 ## Part 4 — Choose which items to watch
 
-`config.json` already comes set up with your eight dragons **and** automatic tracking of any future dragon. You only need to edit it if you want to add or remove items.
+`config.json` comes set up with eight dragons **and** automatic tracking of any future dragon. You only need to edit it to add or remove items.
 
 ```json
 {
@@ -79,45 +79,100 @@ Using a secret keeps your topic out of the public code.
 
 **Two ways items get watched:**
 
-1. **`products`** — the explicit list. Each item is always checked, even if it's been delisted or sold out for ages. `name` is just the label shown in the notification; `url` is the real product page address.
-2. **`auto_discover`** — this reads Jellycat's *Dragons & Dinosaurs* category every run and automatically adds any product whose web address looks like `something-dragon` (e.g. a brand-new `ember-dragon`). So when Jellycat releases a new dragon, it's picked up on the next check without you touching anything.
+1. **`products`** — the explicit list. Each is always checked, even if delisted or sold out for ages. `name` is just the label shown in the notification; `url` is the real product page address.
+2. **`auto_discover`** — reads Jellycat's *Dragons & Dinosaurs* category every run and automatically adds any product whose address looks like `something-dragon` (e.g. a new `ember-dragon`). New dragons get picked up on the next check with no edits from you. The `slug_pattern` keeps it sensible: it matches a single name + `-dragon`, so it **includes** real dragon plushes (`sage-dragon`, `onyx-dragon`) and **excludes** bag charms, soothers, books and "Personalised … Huge" versions.
 
-   The `slug_pattern` is what makes it dragon-only and sensible: it matches a single name followed by `-dragon`, which **includes** real dragon plushes (e.g. `sage-dragon`, `onyx-dragon`) and **excludes** bag charms, soothers, books and "Personalised … Huge" versions. To watch a *different* animal too, you could change the category URL and pattern — ask me and I'll set it up.
+Leave `ntfy_topic` as-is in this file; the GitHub secret from Part 3 overrides it. Commit any changes.
 
-You can leave `ntfy_topic` as-is; the secret from Part 3 overrides it. Commit any changes you make.
-
-### Turn it on
-
-Go to the **Actions** tab, enable workflows if prompted, pick **Jellycat stock check**, and click **Run workflow** to test it now. Open the run and read the log — you'll see a line per item like:
-
-```
-[check] Bashful Beige Bunny (Medium): IN STOCK (was: None)
-```
-
-You'll also see a `[discover] found N matching products` line showing the dragons it auto-picked up from the category page. After this first run it checks itself automatically every ~15 minutes. You'll only get a notification when an item flips from out-of-stock to in-stock — not on every check.
-
-> **Tip — test your phone alert:** pick an item that's currently *in stock*, run it once (it records the state), then delete `state.json` from the repo and run again. The "was" will reset and it'll fire a test notification.
+> **Note on the URL convention:** auto-discovery assumes a single-word name like `name-dragon`. A two-word name (e.g. `blue-moon-dragon`) wouldn't be caught automatically — just add it to `products` by hand.
 
 ---
 
-## Part 5 — (Optional) Your own home-screen dashboard
+## Part 5 — Make it run automatically (the scheduler)
 
-The `docs/` folder is a little web page showing the current status of everything you track, which you can add to your home screen as its own app.
+GitHub's built-in schedule is unreliable for frequent runs (it often skips for long stretches), so we trigger the checker from **cron-job.org** instead — a free, dependable scheduler.
 
-1. In the repo, go to **Settings → Pages**, set **Source: Deploy from a branch**, branch **main**, folder **/docs**, save. After a minute GitHub gives you a URL like `https://yourname.github.io/jellycat-watch/`.
-2. Edit `docs/index.html` and set `STATE_URL` near the bottom to your repo's raw state file:
+### 5a. Create a GitHub access token
+
+1. GitHub **profile picture → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
+2. Settings:
+   - **Name:** `jellycat cron trigger`
+   - **Expiration:** as long as allowed (~1 year — note the date; you'll regenerate it then).
+   - **Resource owner:** your account.
+   - **Repository access:** **Only select repositories → `jellycat-watch`**.
+   - **Permissions → Repository permissions → Actions → Read and write** (leave the rest default; "Metadata: read" turns on automatically).
+3. **Generate**, then **copy the token immediately** (`github_pat_…`, shown once).
+
+### 5b. Set up the cron-job.org job
+
+1. Create a free account at **cron-job.org → Create cronjob**.
+2. **Title:** `Jellycat checker`
+3. **URL:**
    ```
-   https://raw.githubusercontent.com/YOURNAME/jellycat-watch/main/state.json
+   https://api.github.com/repos/Kxrxn-95/jellycat-watch/actions/workflows/check.yml/dispatches
+   ```
+   (Replace `Kxrxn-95` with your GitHub username if different.)
+4. **Schedule:** every **3 minutes**. (Don't go below ~2 minutes — each run makes several requests to Jellycat, and hitting them too hard risks being blocked.)
+5. Enable **Expert mode / Advanced** and set:
+   - **Method:** `POST`
+   - **Body:** `{"ref":"main"}`
+   - **Headers:**
+     ```
+     Authorization: Bearer github_pat_YOUR_TOKEN_HERE
+     Accept: application/vnd.github+json
+     Content-Type: application/json
+     User-Agent: jellycat-cron
+     ```
+     (The `User-Agent` line is required — GitHub's API rejects requests without one.)
+6. **Save**, then use **Run now / Test run**. A successful trigger returns **HTTP 204 No Content**.
+
+### 5c. Confirm it's running
+
+Open the GitHub **Actions** tab. A new run appears within seconds of each trigger, and a fresh one should show up roughly every 3 minutes from now on — no manual input. A new run appears on **every** check (not only when something's in stock); a green tick just means "checked OK." The phone notification is the thing that only happens on an actual restock.
+
+---
+
+## Part 6 — (Optional) Home-screen status dashboard
+
+The `docs/` folder is a small web page showing the current status of everything you track.
+
+1. **Settings → Pages →** Source: **Deploy from a branch**, branch **main**, folder **/docs**, save. You'll get a URL like `https://yourname.github.io/jellycat-watch/`.
+2. Edit `docs/index.html` and set `STATE_URL` to your raw state file:
+   ```
+   https://raw.githubusercontent.com/Kxrxn-95/jellycat-watch/main/state.json
    ```
 3. Open the Pages URL in Safari → **Share → Add to Home Screen**.
 
-This page only *shows* status; the actual buzzing still comes from the ntfy app in Part 1.
+This only *shows* status — the buzzing still comes from the ntfy app.
+
+---
+
+## Testing the whole chain
+
+To prove GitHub → script → ntfy → your phone all work:
+
+1. Add a known **in-stock** item to `config.json`, e.g.
+   `{ "name": "TEST", "url": "https://jellycat.com/bashful-beige-bunny/" }`, and commit.
+2. With the ntfy app **fully closed** (a banner won't show if the app is open in the foreground), trigger a run (cron-job.org will within 3 min, or hit **Run workflow**).
+3. You should get a lock-screen notification, because the item is in stock and newly tracked.
+4. Remove the TEST line afterwards and commit.
+
+---
+
+## Troubleshooting
+
+- **Alerts show inside the ntfy app but no iOS banner.** iOS didn't register the app for push (usually because the first-launch "Allow" prompt was missed). **Delete and reinstall the ntfy app, tap "Allow" on the prompt, then re-subscribe to your topic.** This is the reliable fix. Also check **Settings → Notifications → ntfy** has Allow Notifications + Banners + Sounds on, and that the topic isn't muted in the app.
+- **No alerts at all (not even in-app).** The app's topic and the `NTFY_TOPIC` secret don't match. Set both to the same exact value.
+- **Notifications respect silent/Do-Not-Disturb.** Max priority gives a prominent banner + sound, but iOS won't override silent mode or a Focus unless you allow ntfy under **Settings → Focus**. (True override needs a "Critical Alerts" entitlement ntfy doesn't have.)
+- **Runs stopped appearing.** Check cron-job.org's execution history — anything other than HTTP 204 usually means the **GitHub token has expired** (regenerate it and paste the new one into the cron-job.org header). Also note GitHub auto-disables a repo's *built-in* schedule after 60 days of no commits — but since cron-job.org drives this, that doesn't affect you.
+- **An item shows `unknown` in the log.** Jellycat may have changed its page wording for that product — the detection rule needs a tweak.
 
 ---
 
 ## Good to know
 
-- **How often:** every ~15 minutes. GitHub sometimes delays scheduled runs when busy, so treat it as "about every 15–20 min." You can make it more frequent by editing the `cron` line in `.github/workflows/check.yml`, but don't hammer the site.
-- **Accuracy:** the checker reads the product page's stock status. It's reliable for normal in/out-of-stock, but if Jellycat changes their page wording the log will show `unknown` for that item — tell me and I'll adjust the script.
-- **Cost:** free. GitHub Actions includes plenty of free minutes for a job this small, and ntfy.sh is free.
-- **Privacy:** anyone who guesses your ntfy topic could send you notifications, so keep it random and private.
+- **How often:** every ~3 minutes via cron-job.org. Plenty fast for restocks without hammering Jellycat. Don't push below ~2 minutes.
+- **Notifications fire only on the transition** out-of-stock → in-stock, so you won't get repeat spam. This is remembered in `state.json`, which the checker commits after each run (those auto-commits are normal).
+- **Cost:** free. Public-repo GitHub Actions, cron-job.org, and ntfy.sh are all free.
+- **Token upkeep:** the GitHub token expires (~1 year) — regenerate and update it in cron-job.org when it does.
+- **Privacy:** anyone who guesses your ntfy topic could send you notifications, so keep it private. The repo being public only exposes harmless code and product URLs — never your topic (it's a secret) or token.
