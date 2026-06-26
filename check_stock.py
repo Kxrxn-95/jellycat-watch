@@ -32,25 +32,10 @@ HEADERS = {
     "Accept-Language": "en-GB,en;q=0.9",
 }
 
-# Phrases that mean "you cannot buy this right now".
-OUT_OF_STOCK_MARKERS = [
-    "out of stock",
-    "sold out",
-    "notify me when",
-    "email me when",
-    "coming soon",
-    "currently unavailable",
-    "no longer available",
-]
-
-# Phrases that indicate a live, purchasable product (an active buy control).
-# "adding to bag" is the add-to-cart confirmation text, present on a real
-# product form; it does NOT appear on retired pages that have no buy button.
-IN_STOCK_MARKERS = [
-    "add to bag",
-    "add to cart",
-    "adding to bag",
-]
+# Stock is read from the product's structured-data availability tag (see
+# detect_in_stock), not from scanning page text — words like "Add to Bag",
+# "Out of Stock" and "Retired" also appear in the site navigation and the
+# "you might also like" carousels, which would otherwise give false readings.
 
 
 def fetch(url: str) -> str:
@@ -63,24 +48,23 @@ def fetch(url: str) -> str:
 
 def detect_in_stock(html: str):
     """
-    Decide whether a product page shows the item as buyable right now.
+    Decide whether a product is buyable, using the page's structured-data
+    availability tag (schema.org JSON-LD, or the Open Graph fallback). This
+    is the product's *own* status, so it isn't fooled by nav links or the
+    cross-sell carousels elsewhere on the page.
 
-    Returns (in_stock: bool, info: str) where info is a short diagnostic of
-    the signals found, printed to the run log.
+      availability "InStock"      -> in stock
+      availability "OutOfStock"   -> out of stock
+      missing (e.g. retired item) -> out of stock
 
-    Logic, fail-safe to "out of stock":
-      * Explicit out-of-stock wording (or structured-data OutOfStock) -> OUT.
-      * Otherwise, a real buy control ("Add to Bag" / add-to-cart) -> IN.
-      * Otherwise -> OUT. Retired products land here: they have no buy button,
-        even though their structured-data tag is often a stale "InStock", which
-        is exactly the false positive we're avoiding. Structured-data "InStock"
-        on its own is NOT treated as proof of stock.
+    Returns (in_stock: bool, info: str). `info` is logged for transparency.
     """
     lower = html.lower()
 
-    # Read structured / Open Graph availability (used only as a negative signal).
     schema = None
-    m = re.search(r'availability"\s*:\s*"[^"]*?(instock|outofstock|soldout)', lower)
+    m = re.search(
+        r'availability"\s*:\s*"[^"]*?(instock|outofstock|soldout|preorder)', lower
+    )
     if m:
         schema = m.group(1)
     else:
@@ -92,19 +76,8 @@ def detect_in_stock(html: str):
             elif "instock" in val or val in ("in stock", "available"):
                 schema = "instock"
 
-    has_oos = any(marker in lower for marker in OUT_OF_STOCK_MARKERS) or \
-        schema in ("outofstock", "soldout")
-    has_buy = any(marker in lower for marker in IN_STOCK_MARKERS)
-    is_retired = "retired" in lower
-
-    if has_oos:
-        in_stock = False
-    elif has_buy:
-        in_stock = True
-    else:
-        in_stock = False  # no buy control -> treat as not purchasable
-
-    info = f"schema={schema} buy={has_buy} oos={has_oos} retired={is_retired}"
+    in_stock = (schema == "instock")
+    info = f"schema={schema}"
     return in_stock, info
 
 
@@ -123,7 +96,9 @@ def discover_products(disc: dict) -> list:
         return []
     pattern = re.compile(disc.get("slug_pattern", r"^[a-z0-9]+-dragon$"))
     max_pages = int(disc.get("max_pages", 8))
-    link_re = re.compile(r'href=["\'](?:https?://jellycat\.com)?/([a-z0-9-]+)/?["\']', re.I)
+    link_re = re.compile(
+        r'href=["\'](?:https?://jellycat\.com)?/([a-z0-9-]+)/?["\']', re.I
+    )
 
     found = {}  # url -> name
     for page in range(1, max_pages + 1):
@@ -222,7 +197,6 @@ def main() -> int:
     print(f"Checking {len(products)} item(s) total.\n")
 
     state = load_json(STATE_PATH, {})
-    debug = "--debug" in sys.argv
     changed = False
 
     for product in products:
