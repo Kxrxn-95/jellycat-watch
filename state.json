@@ -2,47 +2,47 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1794052991
+    "checked": 1794053171
   },
   "https://jellycat.com/lazulia-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Lazulia Dragon",
-    "checked": 1794052993
+    "checked": 1794053174
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": false,
     "name": "Malachy Dragon",
-    "checked": 1794052996
+    "checked": 1794053177
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1794052999
+    "checked": 1794053179
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
     "name": "Sage Dragon (retired)",
-    "checked": 1794053001
+    "checked": 1794053182
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": false,
     "name": "Sky Dragon",
-    "checked": 1794053004
+    "checked": 1794053185
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1794053009
+    "checked": 1794053187
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1794053013
+    "checked": 1794053190
   },
   "https://jellycat.com/lavender-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Lavender Dragon",
-    "checked": 1794053017
+    "checked": 1794053193
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -77,16 +77,16 @@
   "https://jellycat.com/golden-dragon/": {
     "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1794053020
+    "checked": 1794053195
   },
   "https://jellycat.com/onyx-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Onyx Dragon (retired)",
-    "checked": 1794053022
+    "checked": 1794053198
   },
   "https://jellycat.com/rose-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1794053031
+    "checked": 1794053201
   }
 }
