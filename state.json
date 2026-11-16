@@ -2,47 +2,47 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1794839604
+    "checked": 1794839772
   },
   "https://jellycat.com/lazulia-dragon/": {
     "in_stock": false,
     "name": "Lazulia Dragon",
-    "checked": 1794839607
+    "checked": 1794839775
   },
   "https://jellycat.com/malachy-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Malachy Dragon",
-    "checked": 1794839610
+    "checked": 1794839777
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1794839612
+    "checked": 1794839780
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
     "name": "Sage Dragon (retired)",
-    "checked": 1794839615
+    "checked": 1794839783
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": false,
     "name": "Sky Dragon",
-    "checked": 1794839618
+    "checked": 1794839786
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1794839620
+    "checked": 1794839788
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1794839624
+    "checked": 1794839791
   },
   "https://jellycat.com/lavender-dragon/": {
     "in_stock": false,
     "name": "Lavender Dragon",
-    "checked": 1794839627
+    "checked": 1794839794
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -77,16 +77,16 @@
   "https://jellycat.com/golden-dragon/": {
     "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1794839629
+    "checked": 1794839798
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": false,
     "name": "Onyx Dragon (retired)",
-    "checked": 1794839632
+    "checked": 1794839800
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1794839635
+    "checked": 1794839803
   }
 }
