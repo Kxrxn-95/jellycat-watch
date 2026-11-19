@@ -2,22 +2,22 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1795103127
+    "checked": 1795103305
   },
   "https://jellycat.com/lazulia-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Lazulia Dragon",
-    "checked": 1795103130
+    "checked": 1795103324
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": true,
     "name": "Malachy Dragon",
-    "checked": 1795103134
+    "checked": 1795103327
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1795103140
+    "checked": 1795103300
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
@@ -27,22 +27,22 @@
   "https://jellycat.com/sky-dragon/": {
     "in_stock": true,
     "name": "Sky Dragon",
-    "checked": 1795103151
+    "checked": 1795103320
   },
   "https://jellycat.com/snow-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1795103155
+    "checked": 1795103314
   },
   "https://jellycat.com/dexter-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1795103159
+    "checked": 1795103310
   },
   "https://jellycat.com/lavender-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Lavender Dragon",
-    "checked": 1795103164
+    "checked": 1795103332
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -75,18 +75,18 @@
     "checked": 1782411142
   },
   "https://jellycat.com/golden-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1795103168
+    "checked": 1795103338
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": true,
     "name": "Onyx Dragon (retired)",
-    "checked": 1795103176
+    "checked": 1795103343
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1795103180
+    "checked": 1795103347
   }
 }
