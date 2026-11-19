@@ -1,48 +1,48 @@
 {
   "https://jellycat.com/heart-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1795104211
+    "checked": 1795104372
   },
   "https://jellycat.com/lazulia-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Lazulia Dragon",
-    "checked": 1795103868
+    "checked": 1795104375
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": false,
     "name": "Malachy Dragon",
-    "checked": 1795104231
+    "checked": 1795104378
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1795103845
+    "checked": 1795104380
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
     "name": "Sage Dragon (retired)",
-    "checked": 1795104242
+    "checked": 1795104383
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": true,
     "name": "Sky Dragon",
-    "checked": 1795104225
+    "checked": 1795104386
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1795104221
+    "checked": 1795104388
   },
   "https://jellycat.com/dexter-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1795104217
+    "checked": 1795104391
   },
   "https://jellycat.com/lavender-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Lavender Dragon",
-    "checked": 1795104237
+    "checked": 1795104394
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -77,16 +77,16 @@
   "https://jellycat.com/golden-dragon/": {
     "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1795104246
+    "checked": 1795104397
   },
   "https://jellycat.com/onyx-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Onyx Dragon (retired)",
-    "checked": 1795103891
+    "checked": 1795104399
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1795104255
+    "checked": 1795104402
   }
 }
