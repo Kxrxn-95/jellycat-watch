@@ -2,91 +2,108 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1795798273
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/lazulia-dragon/": {
     "in_stock": false,
     "name": "Lazulia Dragon",
-    "checked": 1795798282
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": false,
     "name": "Malachy Dragon",
-    "checked": 1795798285
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1795798271
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
     "name": "Sage Dragon (retired)",
-    "checked": 1795798291
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/sky-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Sky Dragon",
-    "checked": 1795798280
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1795798277
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1795798275
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/lavender-dragon/": {
     "in_stock": false,
     "name": "Lavender Dragon",
-    "checked": 1795798288
-  },
-  "https://jellycat.com/bashful-beige-bunny/": {
-    "in_stock": true,
-    "name": "TEST - Bashful Beige Bunny",
-    "checked": 1782379852
-  },
-  "https://jellycat.com/jellycat-jack/": {
-    "in_stock": true,
-    "name": "TEST - Jellycat Jack",
-    "checked": 1782384885
-  },
-  "https://jellycat.com/amuseables-jellycat-football/": {
-    "in_stock": true,
-    "name": "Football Test",
-    "checked": 1782385775
-  },
-  "https://jellycat.com/amuseables-sports-fowla-red-card/": {
-    "in_stock": true,
-    "name": "Football Test",
-    "checked": 1782386676
-  },
-  "https://jellycat.com/amuseables-sports-walston-whistle/": {
-    "in_stock": true,
-    "name": "Football Test",
-    "checked": 1782386731
-  },
-  "https://jellycat.com/larry-lobster-sailor-outfit/": {
-    "in_stock": true,
-    "name": "Larry Lobster",
-    "checked": 1782411142
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/golden-dragon/": {
     "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1795798294
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": false,
     "name": "Onyx Dragon (retired)",
-    "checked": 1795798296
+    "checked": 1795798455,
+    "pending": false
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1795798299
+    "checked": 1795798455,
+    "pending": false
+  },
+  "_meta": {
+    "discovered": [
+      {
+        "name": "Heart Dragon",
+        "url": "https://jellycat.com/heart-dragon/"
+      },
+      {
+        "name": "Lazulia Dragon",
+        "url": "https://jellycat.com/lazulia-dragon/"
+      },
+      {
+        "name": "Malachy Dragon",
+        "url": "https://jellycat.com/malachy-dragon/"
+      },
+      {
+        "name": "Persimmon Dragon",
+        "url": "https://jellycat.com/persimmon-dragon/"
+      },
+      {
+        "name": "Sage Dragon",
+        "url": "https://jellycat.com/sage-dragon/"
+      },
+      {
+        "name": "Sky Dragon",
+        "url": "https://jellycat.com/sky-dragon/"
+      },
+      {
+        "name": "Snow Dragon",
+        "url": "https://jellycat.com/snow-dragon/"
+      }
+    ],
+    "discovered_at": 1795798455,
+    "unverified_runs": 0,
+    "health_alert_sent": false
   }
 }
