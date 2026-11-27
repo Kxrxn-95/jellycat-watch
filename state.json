@@ -2,7 +2,7 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1795773674
+    "checked": 1795773995
   },
   "https://jellycat.com/lazulia-dragon/": {
     "in_stock": true,
@@ -12,37 +12,37 @@
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": true,
     "name": "Malachy Dragon",
-    "checked": 1795773857
+    "checked": 1795774031
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": true,
     "name": "Persimmon Dragon",
-    "checked": 1795773668
+    "checked": 1795773992
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": true,
     "name": "Sage Dragon (retired)",
-    "checked": 1795773870
+    "checked": 1795774043
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": true,
     "name": "Sky Dragon",
-    "checked": 1795773844
+    "checked": 1795774012
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": true,
     "name": "Snow Dragon",
-    "checked": 1795773841
+    "checked": 1795774006
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": true,
     "name": "Dexter Dragon",
-    "checked": 1795773835
+    "checked": 1795774000
   },
   "https://jellycat.com/lavender-dragon/": {
     "in_stock": true,
     "name": "Lavender Dragon",
-    "checked": 1795773864
+    "checked": 1795774037
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -75,9 +75,9 @@
     "checked": 1782411142
   },
   "https://jellycat.com/golden-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Golden Dragon (retired)",
-    "checked": 1795773877
+    "checked": 1795774051
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": true,
