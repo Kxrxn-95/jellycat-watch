@@ -37,7 +37,6 @@ Keep the topic name handy — it must match the GitHub secret in Part 3 exactly.
    check_stock.py
    config.json
    .github/workflows/check.yml
-   docs/            (optional dashboard — see Part 6)
    ```
 
    **Tip on uploading:** GitHub's web drag-and-drop can't create folders and Windows sometimes mangles filenames during a drag (e.g. `CHECK_~1.PY`). The reliable way is **Add file → Create new file**: type the full path in the name box — typing `.github/workflows/check.yml` auto-creates the folders — then paste the contents. Do the same for `check_stock.py` and `config.json`. If a filename ever comes out wrong, open it → pencil ✏️ → fix the name → commit.
@@ -131,21 +130,6 @@ GitHub's built-in schedule is unreliable for frequent runs (it often skips for l
 ### 5c. Confirm it's running
 
 Open the GitHub **Actions** tab. A new run appears within seconds of each trigger, and a fresh one should show up roughly every 3 minutes from now on — no manual input. A new run appears on **every** check (not only when something's in stock); a green tick just means "checked OK." The phone notification is the thing that only happens on an actual restock.
-
----
-
-## Part 6 — (Optional) Home-screen status dashboard
-
-The `docs/` folder is a small web page showing the current status of everything you track.
-
-1. **Settings → Pages →** Source: **Deploy from a branch**, branch **main**, folder **/docs**, save. You'll get a URL like `https://yourname.github.io/jellycat-watch/`.
-2. Edit `docs/index.html` and set `STATE_URL` to your raw state file:
-   ```
-   https://raw.githubusercontent.com/Kxrxn-95/jellycat-watch/main/state.json
-   ```
-3. Open the Pages URL in Safari → **Share → Add to Home Screen**.
-
-This only *shows* status — the buzzing still comes from the ntfy app.
 
 ---
 
