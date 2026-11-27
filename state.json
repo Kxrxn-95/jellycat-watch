@@ -1,48 +1,48 @@
 {
   "https://jellycat.com/heart-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Heart Dragon",
-    "checked": 1795772181
+    "checked": 1795772383
   },
   "https://jellycat.com/lazulia-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Lazulia Dragon",
-    "checked": 1795772187
+    "checked": 1795772405
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": true,
     "name": "Malachy Dragon",
-    "checked": 1795772192
+    "checked": 1795772410
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1795772197
+    "checked": 1795772371
   },
   "https://jellycat.com/sage-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Sage Dragon (retired)",
-    "checked": 1795772203
+    "checked": 1795772422
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": true,
     "name": "Sky Dragon",
-    "checked": 1795772209
+    "checked": 1795772398
   },
   "https://jellycat.com/snow-dragon/": {
-    "in_stock": true,
+    "in_stock": false,
     "name": "Snow Dragon",
-    "checked": 1795772214
+    "checked": 1795772394
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": true,
     "name": "Dexter Dragon",
-    "checked": 1795772219
+    "checked": 1795772389
   },
   "https://jellycat.com/lavender-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Lavender Dragon",
-    "checked": 1795772223
+    "checked": 1795772415
   },
   "https://jellycat.com/bashful-beige-bunny/": {
     "in_stock": true,
@@ -75,18 +75,18 @@
     "checked": 1782411142
   },
   "https://jellycat.com/golden-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Golden Dragon (retired)",
-    "checked": 1795772228
+    "checked": 1795772426
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": true,
     "name": "Onyx Dragon (retired)",
-    "checked": 1795772232
+    "checked": 1795772432
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1795772024
+    "checked": 1795772439
   }
 }
