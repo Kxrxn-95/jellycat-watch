@@ -163,13 +163,22 @@ To prove GitHub → script → ntfy → your phone all work:
 
 ## How stock is detected
 
-For each product the checker decides like this (erring on the side of "out of stock", so you never get false alarms):
+Each Jellycat product page carries a hidden "Product" data block (the same one Google reads) stating that product's own availability — `InStock`, `OutOfStock` or `Discontinued` — plus its web address, price and currency. The checker reads that block, ignoring page text like "Add to Bag" or "Retired" (those words also appear in menus and "you might also like" carousels).
 
-1. If the page shows out-of-stock wording (or structured-data marked `OutOfStock`) → **out of stock**.
-2. Otherwise, if there's an active buy control ("Add to Bag") → **in stock**.
-3. Otherwise → **out of stock**.
+**Every reading is verified before it's trusted.** Jellycat runs separate regional stores (UK, US, Europe…) and routes visitors by location — and GitHub's servers are mostly *outside* the UK, so the checker is sometimes handed another store's page with completely different stock. That was the cause of the alert barrages. A reading only counts if:
 
-Step 3 is what fixes retired products: a retired page has no buy button, yet its hidden structured-data tag often still says "InStock". The checker therefore does **not** treat that tag on its own as proof of stock — it needs a real buy button. Every run logs a diagnostic per item (`[schema=… buy=… oos=… retired=…]`) so you can see exactly which signals were found.
+1. the checker landed on the exact page it asked for on `jellycat.com` (not redirected elsewhere);
+2. the page's Product block is for that same product; and
+3. the product comes from the UK store (its images live under the UK store's ID, `s-e66ltxu1n1`).
+
+Anything else is logged as **UNVERIFIED** — it changes nothing and never alerts. Verified results: `InStock` → in stock; `OutOfStock` / `Discontinued` / anything else → not in stock.
+
+**Extra safety nets:**
+- **Barrage guard:** if more than 3 items flip to "in stock" in the same run, they're held and only alerted if the next run (~3 min later) confirms them. Real multi-dragon restocks still get through, one run later. (Change the number with `"barrage_threshold"` in `config.json`.)
+- **Health alert:** if no page at all can be verified for ~30 minutes, you get a single low-priority "Jellycat checker needs attention" notification, rather than the checker silently going blind.
+- **Gentler on Jellycat:** the category scan for new dragons runs every 30 minutes, not every run, because Jellycat rate-limits busy visitors (HTTP 429).
+
+Each log line shows what was found, e.g. `[check] Heart Dragon: out of stock (was: False)  [UK store · OutOfStock · £58]` or `[skip]  Rose Dragon: UNVERIFIED - redirected to https://us.jellycat.com/rose-dragon/ (no change, no alert)`.
 
 ## Troubleshooting
 
@@ -177,7 +186,9 @@ Step 3 is what fixes retired products: a retired page has no buy button, yet its
 - **No alerts at all (not even in-app).** The app's topic and the `NTFY_TOPIC` secret don't match. Set both to the same exact value.
 - **Notifications respect silent/Do-Not-Disturb.** Max priority gives a prominent banner + sound, but iOS won't override silent mode or a Focus unless you allow ntfy under **Settings → Focus**. (True override needs a "Critical Alerts" entitlement ntfy doesn't have.)
 - **Runs stopped appearing.** Check cron-job.org's execution history — anything other than HTTP 204 usually means the **GitHub token has expired** (regenerate it and paste the new one into the cron-job.org header). Also note GitHub auto-disables a repo's *built-in* schedule after 60 days of no commits — but since cron-job.org drives this, that doesn't affect you.
-- **A real in-stock item is reported out of stock.** Each log line ends with a diagnostic like `[schema=instock buy=True oos=False retired=False]`. If a genuinely in-stock item shows `buy=False`, Jellycat may have changed its buy-button wording — the `IN_STOCK_MARKERS` list in `check_stock.py` needs a tweak.
+- **Some items show UNVERIFIED in the log.** Normal now and then — that run was sent to another regional store, was rate-limited (HTTP 429), or hit a network blip. Nothing changes and no alert fires; the next run tries again. If an item is *always* unverified with "no product data", its page has probably been removed — take it out of `config.json`.
+- **"Jellycat checker needs attention" notification.** Nothing has been verifiable for ~30 minutes. Open the latest run log on GitHub: if every line says "redirected to us.jellycat.com" (or similar), Jellycat is routing GitHub's servers away from the UK store for now; if it says "page is not from the Jellycat UK store" everywhere, Jellycat may have changed its store ID — add the new one as `"store_fingerprint": "s-…"` in `config.json`.
+- **Lots of items held "for one more check".** That's the barrage guard. If the next run confirms them you'll get the alerts; if it was a glitch, they quietly drop.
 
 ---
 
