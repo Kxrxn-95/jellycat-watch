@@ -1,8 +1,8 @@
 {
   "https://jellycat.com/heart-dragon/": {
-    "in_stock": false,
+    "in_stock": true,
     "name": "Heart Dragon",
-    "checked": 1795774347
+    "checked": 1795774547
   },
   "https://jellycat.com/lazulia-dragon/": {
     "in_stock": true,
@@ -17,7 +17,7 @@
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": true,
     "name": "Persimmon Dragon",
-    "checked": 1795773992
+    "checked": 1795774541
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": true,
@@ -32,12 +32,12 @@
   "https://jellycat.com/snow-dragon/": {
     "in_stock": true,
     "name": "Snow Dragon",
-    "checked": 1795774359
+    "checked": 1795774557
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": true,
     "name": "Dexter Dragon",
-    "checked": 1795774352
+    "checked": 1795774553
   },
   "https://jellycat.com/lavender-dragon/": {
     "in_stock": true,
@@ -87,6 +87,6 @@
   "https://jellycat.com/rose-dragon/": {
     "in_stock": true,
     "name": "Rose Dragon (retired)",
-    "checked": 1795773333
+    "checked": 1795774571
   }
 }
