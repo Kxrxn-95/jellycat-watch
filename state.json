@@ -2,58 +2,58 @@
   "https://jellycat.com/heart-dragon/": {
     "in_stock": false,
     "name": "Heart Dragon",
-    "checked": 1795859659,
+    "checked": 1795860049,
     "pending": false,
-    "last_unverified": 1795859832,
-    "note": "no product data on page (removed or changed?)"
+    "last_unverified": 1795859832
   },
   "https://jellycat.com/lazulia-dragon/": {
     "in_stock": false,
     "name": "Lazulia Dragon",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795818793
   },
   "https://jellycat.com/malachy-dragon/": {
     "in_stock": false,
     "name": "Malachy Dragon",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795858238
   },
   "https://jellycat.com/persimmon-dragon/": {
     "in_stock": false,
     "name": "Persimmon Dragon",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795858753
   },
   "https://jellycat.com/sage-dragon/": {
     "in_stock": false,
     "name": "Sage Dragon (retired)",
-    "checked": 1795859659,
+    "checked": 1795860049,
     "pending": false,
-    "last_unverified": 1795859832,
-    "note": "no product data on page (removed or changed?)"
+    "last_unverified": 1795859832
   },
   "https://jellycat.com/sky-dragon/": {
     "in_stock": true,
     "name": "Sky Dragon",
     "checked": 1795859832,
     "pending": false,
-    "last_unverified": 1795820592
+    "last_unverified": 1795860049,
+    "note": "no product data on page (removed or changed?)"
   },
   "https://jellycat.com/snow-dragon/": {
     "in_stock": false,
     "name": "Snow Dragon",
     "checked": 1795859832,
     "pending": false,
-    "last_unverified": 1795858753
+    "last_unverified": 1795860049,
+    "note": "no product data on page (removed or changed?)"
   },
   "https://jellycat.com/dexter-dragon/": {
     "in_stock": false,
     "name": "Dexter Dragon",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795858753
   },
@@ -62,26 +62,28 @@
     "name": "Lavender Dragon",
     "checked": 1795859832,
     "pending": false,
-    "last_unverified": 1795818793
+    "last_unverified": 1795860049,
+    "note": "no product data on page (removed or changed?)"
   },
   "https://jellycat.com/golden-dragon/": {
     "in_stock": false,
     "name": "Golden Dragon (retired)",
     "checked": 1795859832,
     "pending": false,
-    "last_unverified": 1795818072
+    "last_unverified": 1795860049,
+    "note": "no product data on page (removed or changed?)"
   },
   "https://jellycat.com/onyx-dragon/": {
     "in_stock": false,
     "name": "Onyx Dragon (retired)",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795820774
   },
   "https://jellycat.com/rose-dragon/": {
     "in_stock": false,
     "name": "Rose Dragon (retired)",
-    "checked": 1795859832,
+    "checked": 1795860049,
     "pending": false,
     "last_unverified": 1795818072
   },
@@ -116,7 +118,7 @@
         "url": "https://jellycat.com/snow-dragon/"
       }
     ],
-    "discovered_at": 1795858238,
+    "discovered_at": 1795860049,
     "unverified_runs": 0,
     "health_alert_sent": false
   }
